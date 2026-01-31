@@ -3,8 +3,8 @@ Author: Josué Emiliano
 """
 
 from menu import display_menu
-from game_logic import game
-from game_logic import two_players
+#from game_logic import game
+from game_logic import play_game
 
 def main():
     """Main function to run the Tic Tac Toer game
@@ -17,7 +17,7 @@ def main():
             # Here you would call the one player game function when
             # implmented
         elif choice == 2:
-            two_players()
+            play_game()
         elif choice == 3:
             print("Exiting the game. Goodbye!")
             break
