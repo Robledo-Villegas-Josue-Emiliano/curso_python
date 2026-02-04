@@ -13,9 +13,7 @@ def main():
     while True:
         choice = display_menu()
         if choice == 1:
-            print("One Player Game is not implemented yet.")
-            # Here you would call the one player game function when
-            # implmented
+            play_game()
         elif choice == 2:
             play_game()
         elif choice == 3:

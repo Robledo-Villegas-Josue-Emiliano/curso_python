@@ -15,7 +15,7 @@ def check_winner(d:dict, combo_list:list)->bool:
             return True
     return False
 
-def game() -> str:
+def game(num_player:int) -> str:
     """
     Here lives the main game loop
     """
@@ -34,11 +34,11 @@ def game() -> str:
     
     while turns < 9 and not winner:
         board.display_board(dboard)
-        valid_move = False
-        while not valid_move:
-            valid_move = board.player_turn(current_player, dboard)
-        turns += 1
-
+        if num_player == 1:
+            one_player(current_player,dboard)
+        if num_player == 2:
+            two_player(current_player,dboard)
+        turns +=1
         winner = check_winner(dboard, combo_list)
         if winner:
             w_player = current_player
@@ -57,13 +57,9 @@ def play_game(players=2)->None:
         """Two players game loop
         """
         playing = True
-        playing = True
         score = {'x':0, 'O':0, 'Ties':0}
         while playing:
-            if players == 1: #One Player
-                winner = game_vs_computer()
-            else: 
-                winner = game()
+            winner = game(players)
             if len(winner) > 0:
                 print(f"Winner: player {winner}")
             else:
@@ -74,6 +70,30 @@ def play_game(players=2)->None:
             if replay != 'y':
                 playing = False       
             print(f"Score: X = {score['x']}, O = {score['O']}, Ties = {score['Ties']}")
+
+
+def one_player (current_player:str,dboard:dict)->None:
+    """One player vs computer game loop"""
+    valid_move = False
+    x_player = 'X'
+    o_player = 'O'
+    if current_player == x_player:
+        while not valid_move:
+            valid_move = board.player_turn(current_player,dboard)
+        else:
+            print("Computer's vs turn:")
+            while not valid_move:
+                move = random.randint(0,8)
+                if str(dboard[move]) == str(move):
+                    dboard[move] = o_player
+                    valid_move = True
+
+def two_player (current_player:str,dboard:dict)->None:
+    """Two players game loop"""
+    valid_move = False
+    while not valid_move:
+        valid_move = board.player_turn
+        (current_player,dboard)
 
 
 def game_vs_computer()->str:
