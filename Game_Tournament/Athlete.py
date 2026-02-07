@@ -21,3 +21,4 @@ if __name__=="__main__":
   Athlete1.set_number = 10
   print ( Athlete1)
   print(repr(Athlete1))
+  
