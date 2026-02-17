@@ -1,9 +1,12 @@
+import random
+
 class Athlete:
     """Athlete class, with only name attribute"""
     def __init__(self,name):
         """Custom factory function of class Athlete, receives name"""
         self.name = name
-        self.number = 0
+        self.number = random.randint (1,99) 
+        # Assign a random number to the athlete 
 
     def __str__(self):
         """String representation of the Athlete object."""

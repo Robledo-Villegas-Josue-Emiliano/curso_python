@@ -64,10 +64,54 @@ class Game:
         game_string = game.to_json()
         return game_string
 
-    def save_game_to_json(game, filename):
+def save_game_to_json(game_data, filename):
         """Save the game object to a JSON file"""
-        with open(filename, 'w' , encodign='urf-8') as f:json.dump(game.to_json(), f, indent=4)
+        with open(filename, 'w' , encoding='utf-8') as f:
+            json.dump(game_data, f, indent=4)
+
+def a_tournament():
+        """Example usage of the game class."""
+        players_mexico = ['Chicharito','Piojo','Guardado','Hector Moreno','Memo Ochoa','Gil Mora','Giovanni Dos Santos','Salcido','Hugo Sanches','Cuauthémoc Blanco','Jorge Campos']
+        players_brazil = ['Ronaldinho','Neymar','Ronaldo Nazario','Alisson','Pelé','Marquinhos','Hulk','David Luis','Rapinha','Casemiro','Zico']
+        players_france = ['Mbappé','Griezmann','Pogba','Lloris','Kanté','Benzema','Varane','Coman','Rabiot','Giroud','Matuidi']
+        players_spain = ['Sergio Ramos','Iniesta','Xavi','Casillas','Puyol','David Villa','Busquets','Silva','Morata','Isco','Alba']
+        players_japan = ['Kagawa','Honda','Okazaki','Nagatomo','Yoshida','Hasebe','Kawashima','Inui','Shibasaki','Muto','Sakai']
+        players_germany = ['Müller','Kroos','Neuer','Hummels','Reus','Götze','Khedira','Draxler','Schweinsteiger','Boateng','Özil']
+        players_italy = ['Buffon','Chiellini','Pirlo','Balotelli','Marchisio','De Rossi','Insigne','Barzagli','Bonucci','Verratti','El Shaarawy']
+        players_netherlands = ['Van Dijk','Depay','Robben','Sneijder','Van Persie','De Jong','Blind','Wijnaldum','Cillessen','Babel','Kuyt']
+        sport = Sport("Futbol",11,"FIFA")
+        team_mexico = Team("México",sport)
+        team_brazil = Team("Brazil", sport)
+        team_france = Team("France", sport)
+        team_spain = Team("Spain", sport)
+        team_japan = Team("Japan", sport)
+        team_germany = Team("Germany", sport)
+        team_italy = Team("Italy", sport)
+        team_netherlands = Team("Netherlands", sport)
+        for player in players_mexico:
+            team_mexico.add_athlete(Athlete(player))
+        for player in players_brazil:
+            team_brazil.add_athlete(Athlete(player))
+        for player in players_france:
+            team_france.add_athlete(Athlete(player))
+        for player in players_spain:
+            team_spain.add_athlete(Athlete(player))
+        for player in players_japan:    
+            team_japan.add_athlete(Athlete(player))
+        for player in players_germany:
+            team_germany.add_athlete(Athlete(player))
+        for player in players_italy:
+            team_italy.add_athlete(Athlete(player)) 
+        for player in players_netherlands:
+            team_netherlands.add_athlete(Athlete(player))   
+        toournament_list = [team_mexico,team_brazil,team_france, team_germany,team_italy,team_japan,team_spain,team_netherlands]
+        json_string = ""
+        for team in toournament_list:
+            json_string += f"{team.to_json()}\n"
+        return json_string
+        
         
 if __name__ == "__main__":
-    string_game = a_game()
-    save_game_to_json(string_game, "game.json")
+    string_game = a_tournament()
+    save_game_to_json(string_game, "tournament.json")
+    print(string_game)
