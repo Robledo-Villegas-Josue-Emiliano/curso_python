@@ -47,11 +47,20 @@ class Tournament:
         """Load a tournament object from a JSON file"""
         with open (filename, 'r' , encoding="utf-8") as f:
             data = json.load(f)
-        for team_data in data ["teams"]:
-            team = Team(team_data["name", team_data["sport"]])
-            players = team_data["athletes"]
-            for player in players:
-                team.add_athlete(Athlete(player))
-            self.add_team(team)
-   
+            for team_data in data:
+                team_name = team_data["name"]
+                sport_name = team_data["sport"]["name"]
+                sport_league = team_data["sport"]["league"]
+                sport_num_players = team_data["sport"]["num_players"]
+                sport = Sport(sport_name,sport_num_players,sport_league)
+                team = Team(team_name,sport)
+                players = team_data["athletes"] 
+                for player in players:
+                    team.add_athlete(Athlete(player))
+                self.add_team(team)
+
+if __name__ == "__main__":
+    tournament = Tournament("FIFA World Cup")    
+    tournament.load_json("tournament.json")
+    print(tournament)
     
