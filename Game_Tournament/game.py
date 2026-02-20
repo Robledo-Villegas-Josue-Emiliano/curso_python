@@ -105,11 +105,7 @@ def a_tournament():
         for player in players_netherlands:
             team_netherlands.add_athlete(Athlete(player))   
         tournament_list = [team_mexico,team_brazil,team_france, team_germany,team_italy,team_japan,team_spain,team_netherlands]
-        json_string = ""
-        for team in tournament_list:
-            json_string += f"{team.to_json()}\n"
-        json_string = f"[\n{json_string[:-2]}]" # Remove trailing comma and newline
-        return json_string
+        return [team.to_json() for team in tournament_list]
         
         
 if __name__ == "__main__":
