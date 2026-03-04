@@ -2,10 +2,10 @@ import os
 import colorama
 from Tournament import Tournament
 from colorama import  Fore, Back, Style, init
-init(autorest=True)
+init(autoreset=True)
 
 class coloramaUI:
-    def __inti__ (self):
+    def __init__ (self):
         self.tournament = None
         self.current_file = None
 
@@ -14,13 +14,14 @@ class coloramaUI:
 
     def run (self):
         """Run the coloramaUI"""
-        coloramaUI.init(autoreset=True)
-        self.show_menu()
+        # coloramaUI.init(autoreset=True)
+        # self.show_menu()
+        self.display_menu()
     
     def show_menu (self):
         """Show the menu"""
         while True : 
-            print ("\n TournamentS")
+            print ("\n Tournament")
             print ("1. Load tournament")
             print ("2.Display tournament")
             print ("3.Exit")
@@ -58,7 +59,38 @@ class coloramaUI:
         """Exit the application""" 
         print("Exiting application...")
         exit()
+
+    def get_tournament_json (self):
+        """ Get the tournament"""
+        file_path = input ("Enter the path to the JSON file: ")
+        self.set_current_file (file_path)
+        self.open_tournament(file_path)
+    
+    def display_menu (self):
+        """ Show the menu """
+        dictionary_menu = {
+            "1": "Load tournament",
+            "2": "Display tournament",
+            "3": "Exit"
+        }
+        action_dictionary = {
+            "1": self.get_tournament_json,
+            "2": self.display_tournament,
+            "3": self.exit_app
+        }
+        while True:
+            print("\nTournament")
+            for key in sorted (dictionary_menu.keys()):
+                print(f"{key}. {dictionary_menu[key]}")
+            choice = input ("Enter your choice: ")
+            if choice in action_dictionary:
+                action_dictionary[choice]()
+            else:
+                print("Invalid choice. Please try again.")
+
 if __name__ == "__main__":
     ui  = coloramaUI()
+    ui.set_current_file("tournament.json")
+    ui.open_tournament()
     ui.run()       
 
