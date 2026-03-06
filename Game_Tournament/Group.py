@@ -45,4 +45,10 @@ class Group:
         print(f"Group: {self.name}")
         for game in self.games:
             print(f"  {game}")
-        
+    
+    def display_play_game (self):
+        for game in self.games:
+            game.play()
+
+    def play_group_games (self):
+        for game in self

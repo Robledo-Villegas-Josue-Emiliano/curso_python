@@ -92,6 +92,14 @@ class Tournament:
         for group in self.groups:
             self.groups[group].display_group_games()
 
+    def display_games(self):
+        """ Display the games. """
+        for group in self.groups:
+            self.groups[group].display_group_games()
+
+    def play_games(self):
+        for group in self.groups:
+            self.groups[group].play_group_game
 if __name__ == "__main__":
     tournament = Tournament("FIFA World Cup")
     tournament.load_json("tournament.json")
