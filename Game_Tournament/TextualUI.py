@@ -93,7 +93,7 @@ class TextualUI(App):
         self.tournament = None
         self.current_file = None
 
-    def compose (self) -> CompoResult:
+    def compose (self) -> ComposeResult:
         yield Header()
         with Vertical (id="menu-container"):
             yield Button("Load Tournament", id="load", variant = "primary")
@@ -167,7 +167,7 @@ class TextualUI(App):
     def display_menu (self):
         self.run()
 
-if __name__ = "__main__":
+if __name__ == "__main__":
     app = TextualUI()
     app.set_current_file ("tournament.json")
     app.open_tournament()
