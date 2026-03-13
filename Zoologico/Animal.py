@@ -5,7 +5,7 @@ class Animal :
         self.caracteristica = caracteristica
 
     def __str__(self):
-        return F"The name of animal is {self.name} "
+        return F"El nombre del animal es {self.name} "
 
     def __repr__(self):
         return F"Animal (name is: {self.name}, Class animal: {self.id_clase})"
