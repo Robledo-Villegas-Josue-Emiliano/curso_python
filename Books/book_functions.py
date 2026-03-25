@@ -26,6 +26,7 @@ def create_author_dictionary(books:list[Book])->dict[str, list[Book]]:
                 author_dict[name].append(book)
     return author_dict
 
+
 if __name__ == "__main__":
     books = load_books(r"C:\\Users\\emili\\OneDrive\\Desktop\\Curso_python ( no borrar )\\curso_python\\Books\\booklist2000.csv")
     genres = get_genres(books)
