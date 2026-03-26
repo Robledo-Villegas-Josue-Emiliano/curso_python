@@ -27,6 +27,13 @@ def create_author_dictionary(books:list[Book])->dict[str, list[Book]]:
     return author_dict
 
 
+def create_book_dictionary(book_list:list[Book])->dict[str, Book]:
+    """Create a dictionary where the keys are book IDs and the values are Book objects."""
+    book_dict = {}
+    for book in book_list:
+        book_dict[book.id] = book
+    return book_dict
+
 if __name__ == "__main__":
     books = load_books(r"C:\\Users\\emili\\OneDrive\\Desktop\\Curso_python ( no borrar )\\curso_python\\Books\\booklist2000.csv")
     genres = get_genres(books)
