@@ -1,21 +1,56 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Search by Author</title>
-</head>
-<body>
-    <h1>Search by Author</h1>
-    <form action="/search_by_author" method="post">
+{% extends "base.html" %}
+{% block title %} Libra Online Library - Search by Author{% endblock %}
+{% block body %}
+<div>
+    <center>    
+        <h1>Search by Author</h1>
+        <form action="/search_by_author" method="post">
         <label for="author">Author:</label>
         <input type="text" id="author" name="author">
         <input type="submit" value ="Search" >
     </form>
     <ul>
         {% for book in books_list %}
-            <li><a href ="/book/{{book.id}}">{{book.title}}</a> by {{book.author}}</li>
+            <div class="card-group">
+  <div class="card">
+    <img class="card-img-top" src=".../100px180/" alt="Card image cap">
+    <div class="card-body">
+      <h5 class="card-title">
+        <li>
+            <a href ="/book/{{book.id}}">{{book.title}}</a> by {{book.author}}
+        </li>
+    </h5>
+      <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+      <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+    </div>
+  </div>
+  <div class="card">
+    <img class="card-img-top" src=".../100px180/" alt="Card image cap">
+    <div class="card-body">
+      <h5 class="card-title">
+        <li>
+            <a href ="/book/{{book.id}}">{{book.title}}</a> by {{book.author}}
+        </li>
+    </h5>
+      <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+      <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+    </div>
+  </div>
+  <div class="card">
+    <img class="card-img-top" src=".../100px180/" alt="Card image cap">
+    <div class="card-body">
+      <h5 class="card-title">
+        <li>
+            <a href ="/book/{{book.id}}">{{book.title}}</a> by {{book.author}}
+        </li>
+    </h5>
+      <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+      <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+    </div>
+  </div>
+
         {% endfor %}
     </ul>
-</body>
-</html>
+    </center>
+</div>
+{% endblock %}
