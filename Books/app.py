@@ -21,7 +21,16 @@ def search_by_author():
         return render_template('search_by_author.html', books_list=books_list)
     else:
         return render_template('search_by_author.html', books_list=books[:10])
-    
+
+@app.route('/search_by_title', methods=['GET','POST'])
+def search_by_title():
+    if request.method == 'POST':
+        title = request.form['title']
+        books_list = [book for book in books if title.lower() in book.title.lower()]
+        return render_template('search_by_title.html', books_list=books_list)
+    else:
+        return render_template('search_by_title.html', books_list=books[:10])
+
 @app.route('/book/<book_id>')
 def book_detail(book_id): 
     book = book_dict.get(book_id)
