@@ -86,7 +86,7 @@ def buscar_palabras(frases:list, frase_a_buscar:str)->list:
 if __name__ == "__main__":
     frases = carga_archivo_csv("frases_consolidadas.csv")
     print("############ Levensthein ############")
-    lista_frase_amor = buscar_palabras(frases, "El miedo es el asesino de la mente. El miedo es la pequeña muerte que conduce a la destrucción total")
+    lista_frase_amor = buscar_palabras(frases, "cualquiera cocinar")
     for frase in lista_frase_amor:
         print(frase, frase.ratio)
     

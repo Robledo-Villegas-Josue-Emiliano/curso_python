@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Frases Celebres de Películas{% endblock %}
+{% block body %}
+<div class="container">
+    <div>
+        <center>
+            <img src="/static/images/frases_celebres.jpg" alt="Frases Celebres de Películas" height="100">
+        </center>
+    </div>
+    <div>
+        <center>
+            <h1>Frases Celebres de Películas</h1>
+            <p>Colección de frases celebres de películas</p>
+            <div>
+                <h1>Search by Author</h1>
+                <form action="/search_by_author" method="post">
+                <label for="author">Author:</label>
+                <input type="text" id="author" name="author">
+                <input type="submit" value ="Search" >
+            </form>
+            </div>
+            </center>
+        </center>
+    </div>
+</div>
+{% endblock %}
