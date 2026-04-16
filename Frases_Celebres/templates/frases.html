@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}Frases Celebres de Películas{% endblock %}
+{% block body %}
+<div class="container">
+    <div>
+        <center>
+            <img src="/static/images/frases_celebres.jpg" alt="Frases Celebres de Películas" height="100">
+        </center>
+    </div>
+    <div>
+        <center>
+            <div>
+                <h1>Buscar frases</h1>
+                <form action="/frases" method="post">
+                <label for="frase">Frase:</label>
+                <input type="text" id="frase" name="frase">
+                <label for="umbral">Umbral</label>
+                <input type="range" class="form-control" id="umbral" min="0" max="1" step="0.01" name="umbral" value="0.70">
+                <input type="submit" value ="Search" >
+            </form>
+            </div>
+            </center>
+            <div>
+                <ul>
+                    {% for frase in frases %}
+                    <li>{{frase.frase}} - {{frase.pelicula}} {{ frase.ratio}}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </center>
+    </div>
+</div>
+{% endblock %}

@@ -1,7 +1,7 @@
 import re
 
 from flask import Flask, render_template, request
-from frases_celebres import Frase, carga_archivo_csv, crea_diccionario_titulos, buscar_palabras
+from frases_celebres import Frase, carga_archivo_csv, crea_diccionario_titulos, buscar_palabras, buscar_palabras_ratio
 
 app = Flask(__name__)
 
@@ -16,19 +16,19 @@ def index():
 def pelicula():
     if request.method == 'POST':
         pelicula = request.form['pelicula']
-        resultados = diccionario_titulos.get(pelicula, [])
-        return render_template("pelicula.html", resultados=resultados, pelicula=pelicula)
+        peliculas_list = diccionario_titulos.get(pelicula, [])
+        return render_template("pelicula.html", peliculas_list=peliculas_list)
     else:
-        return render_template("pelicula.html", resultados=resultados, pelicula=pelicula)
+        return render_template("pelicula.html", peliculas_list=peliculas_list)
 
-@app.route('/frase', methods =['GET','POST'])
+@app.route('/frases', methods =['GET','POST'])
 def frase():
     if request.method == 'POST':
         frase_a_buscar = request.form['frase']
-        resultados = buscar_palabras(frases, frase_a_buscar)
-        return render_template("frase.html", resultados=resultados, frase_a_buscar=frase_a_buscar)
+        frases_list = buscar_palabras_ratio(frases, frase_a_buscar, umbral=0.50)
+        return render_template("frases.html", frases=frases_list)
     else:
-        return render_template("frase.html", resultados=resultados, frase_a_buscar=frase_a_buscar)
-    
+        return render_template("frases.html", frases=frases)
+
 if __name__ == "__main__":
     app.run(debug=True) 
