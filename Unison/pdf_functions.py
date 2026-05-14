@@ -2,6 +2,27 @@ from bs4 import BeautifulSoup
 import os
 from markitdown import MarkItDown
 import requests
+from sympy import content
+import Levenshtein
+
+class pdf_document:
+    def __init__(self, url,pdf_path,markdown_path):
+        self.url = url
+        self.pdf_path = pdf_path
+        self.markdown_path = markdown_path
+        self.content = None
+        self.convert_pdf_to_markdown()
+
+    def convert_pdf_to_markdown(self):
+        try:
+            converter = MarkItDown()
+            result = converter.convert(self.pdf_path)
+            markwdown_content = result.markdown or result.text_content
+            with open(self.markdown_path, 'w', encoding='utf-8') as f:
+                f.write(markwdown_content)
+            self.content = markwdown_content
+        except Exception as e:
+            print(f"Error converting PDF to Markdown: {e}")
 
 def get_webpage(url):
     try:
@@ -34,42 +55,54 @@ def download_pdf(url, filename):
 
 def get_pdfs(url = "https://fi-ing.unison.mx/acuerdos-de-sesiones-del-h-colegio-de-la-facultad-interdisciplinaria-de-ingenieria-2026/"):
         download_path = "pdfs"
+        markdown_path = "markdown_files"
         if not os.path.exists(download_path):
             os.makedirs(download_path, exist_ok=True)  # Create the directory if it doesn't exist
+        if not os.path.exists(markdown_path):
+            os.makedirs(markdown_path, exist_ok=True)  # Create the directory if it doesn't exist
         html = get_webpage(url)
         if not html:
             print(f"Failed to retrieve the webpage: {url}")
             exit(1)
         pdf_links = extract_pdf_links(html)
+        pdf_dict = {}
         for link in pdf_links:
             print(link)
             filename = link.split('/')[-1]  # Extract the filename from the URL
             downloaded_file = os.path.join(download_path, filename)
             download_pdf(link, downloaded_file)
+            markdown_file = os.path.join(markdown_path, f"{os.path.splitext(filename)[0]}.md")
+            pdf_doc = pdf_document(link, downloaded_file, markdown_file)
+            pdf_dict [filename] = pdf_doc
             print(f"Downloaded: {filename}")
+        return pdf_dict
 
-
-
-def convert_pdf_to_markdown(pdf_path, markdown_path):
-    try:
-        converter = MarkItDown()
-        result = converter.convert(pdf_path)
-        markwdown_content = result.markdown or result.text_content
-        with open(markdown_path, 'w', encoding='utf-8') as f:
-            f.write(markwdown_content)
-    except Exception as e:
-        print(f"Error converting PDF to Markdown: {e}")
+def buscar_palabras_ratio(frases:list, frase_a_buscar:str, umbral:float=0.50)->list:
+    """ Busca una frase en una lista de frases """
+    frases_encontradas = []
+    frase_a_buscar = frase_a_buscar.lower()
+    for frase in frases:
+        frase_lower = frase.frase.lower()
+        ratio = Levenshtein.ratio(frase_lower, frase_a_buscar)
+        if ratio >= umbral:
+            frase.ratio = ratio
+            frases_encontradas.append(frase)
+    return frases_encontradas
 
 def main():
-    if not os.path.exists("markdown_files"):
-        os.makedirs("markdown_files", exist_ok=True)  # Create the directory if it doesn't exist
-    for filename in os.listdir("pdfs"):
-        if filename.lower().endswith('.pdf'):
-            pdf_path = os.path.join("pdfs", filename)
-            markdown_path = os.path.join("markdown_files", f"{os.path.splitext(filename)[0]}.md")
-            convert_pdf_to_markdown(pdf_path, markdown_path)
-            print(f"Converted {filename} to Markdown.")
-            
+    pdf_dictionary = get_pdfs()
+    print(pdf_dictionary.keys())
+    main_dictionary = {}
+    for key, pdf_doc in pdf_dictionary.items():
+        content = pdf_doc.content
+        chunk_length = 10
+        chunks = [content[i:i+chunk_length] for i in range (0, len(content), chunk_length)]  # Split the content into chunks based on the specified length and filter out empty chunks
+        for chunk in chunks:
+            if chunk not in main_dictionary:
+                main_dictionary[chunk] = [key]
+            else:
+                main_dictionary[chunk].append(key)
+
 if __name__ == "__main__":
     main()
 
